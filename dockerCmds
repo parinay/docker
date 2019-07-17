@@ -1,0 +1,83 @@
+#create docker group "if" exists
+sudo groupadd docker
+
+#Manage User as non-root user might need to log-out/log-in back
+#for group membership to be in effect
+sudo usermod -aG docker $USER
+
+docker version
+docker info
+
+#to search an image name
+docker search hello-world
+
+#pull and run image locally
+docker pull hello-world
+docker run hello-world
+docker ps -a
+docker rm $(docker ps -aq)
+docker run hello-world
+
+#start docker on boot
+sudo systemctl enable docker
+
+#restart docker service
+sudo systemctl restart docker.service
+sudo service docker restart
+
+#Kernel compatibility
+curl https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh > check-config.sh
+bash ./check-config.sh
+
+#Docker host to which your client is configured to connect to
+# if unset Docker client is set to connect to Docker Daemon running on localhost
+# else value, Docker client is set to connec to Docker damemon running on that host
+env | grep DOCKER_HOST
+
+#start a Apache Web Server docker run with additional cmd options
+# -p hostPort:containerPort
+# -name container name
+# -d detached mode.
+docker run -p 80:80 --name web -d httpd
+
+stop and remove a running container
+docker stop web
+docker rm web
+
+#storage - adding storage to container
+docker run -p 80:80 --name web -d -v $PWD/htdocs:/usr/local/apache2/htdocs httpd
+
+#Access the container - attaches our terminal to shell of containers in an
+#interactive mode
+docker exec -it web /bin/bash
+
+#force terminate the container
+docker rm -f web
+
+#commit changes to your container
+docker commit web doweb
+
+#list images
+docker image
+
+#login to hub.docker.com
+docker login
+
+#tag and store images in Docker hub
+docker login
+docker tag web parinay/doweb
+docker push parinay/doweb
+
+#Launching a Private registry
+#Docker Registry is available as a container that can be launched like any other container. Since the registry holds multiple images, it’s a good idea to attach a storage volume to it.
+docker run -d -p 5000:5000 --restart=always --name registry -v $PWD/registry:/var/lib/registry registry
+docker pull busybox
+docker tag busybox localhost:5000/busybox
+#Push to local docker registry
+docker push localhost:5000/busybox
+
+#remove one or more docker images
+docker rmi -f localhost:5000/busybox
+
+#pull from local registry
+docker pull localhost:5000/busybox
