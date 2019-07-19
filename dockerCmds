@@ -81,3 +81,30 @@ docker rmi -f localhost:5000/busybox
 
 #pull from local registry
 docker pull localhost:5000/busybox
+
+#docker build Dockerfile
+# -t tage name
+docker build -t sammy/todo-web .
+#Successfully built cad80a530202
+#Successfully tagged sammy/todo-web:latest
+
+#docker pull mogoDB from hub.docker.com
+docker pull mongo:latest
+
+#list available networks
+docker network ls
+
+#inspect network
+docker network inspect bridge
+
+#attaching existing running container
+docker attach alpine
+
+#create network
+docker network create --driver bridge alpine-net
+
+#connect to particular network
+docker network connect bridge alpine4
+
+#remove the network created
+docker network rm alpine-net
