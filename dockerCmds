@@ -108,3 +108,18 @@ docker network connect bridge alpine4
 
 #remove the network created
 docker network rm alpine-net
+
+#docker load an image or repository from a tar archive
+docker images
+docker tag 94e814e2efa8 parinay/ubuntu:firstTry
+#create a tar from single image
+docker save parinay/ubuntu:firstTry > firstTry.tar
+docker load --input firstTry.tar
+docker images
+
+#create a tar from multiple container images
+docker save parinay/ubuntu parinay/doweb > firstTry.tar.gz
+docker load --input firstTry.tar.gz
+Loaded image: parinay/ubuntu:firstTry
+Loaded image: parinay/doweb:latest
+
