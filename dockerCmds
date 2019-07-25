@@ -123,3 +123,21 @@ docker load --input firstTry.tar.gz
 Loaded image: parinay/ubuntu:firstTry
 Loaded image: parinay/doweb:latest
 
+#Purging All Unused or Dangling Images, Containers, Volumes, and Networks
+#images, containers, volumes, and networks — that are dangling (not associated with a container)
+#
+docker system prune
+#remove any stopped containers and all unused images (not just dangling images)
+docker system prune -a
+#Remove images
+docker images purge
+
+#Remove all the images
+#List all images
+docker images -a
+
+#Dangling images are layers that have no relationship to any tagged images.
+#List all dangling images
+docker images -f dangling=true
+docker rmi $(docker images -a -q)
+docker rm $(docker ps -aq)
