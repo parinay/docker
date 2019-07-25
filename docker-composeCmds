@@ -1,0 +1,22 @@
+# docker-compose up goes through docker-compose.yaml file
+# pulls the necessary image or builds it
+docker-compose up
+
+# Runs services in detached/background mode
+docker-compose up -d
+
+# Lists running services
+docker-compose ps
+
+# docker-compose run allows to run one-off commands for
+# your services.
+# e.g. see what are environment vars are for web service
+docker-compose run web env
+docker-compose run redis env
+
+# Stopping the services started in background (-d)
+docker-compose  stop
+
+# Shutdow everything, removing containers.
+# --volumes removes data volume used by the containers
+docker-compose down --volumes

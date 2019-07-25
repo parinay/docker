@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/code
+    environment:
+      FLAS_ENV: development
+  redis:
+    image: "redis:alpine"
