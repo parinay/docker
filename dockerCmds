@@ -141,3 +141,25 @@ docker images -a
 docker images -f dangling=true
 docker rmi $(docker images -a -q)
 docker rm $(docker ps -aq)
+
+#untagged vs remove images
+# Run containers
+docker run -it hello-world /bin/sh
+docker run -it mongo /bin/sh
+
+docker ps -a
+
+# rmi will fail as container is using its ref'ed image
+docker rmi mongo
+docker ps -a
+
+#forced remove, causes untagged image
+docker rmi -f mongo
+#Untagged: mongo:latest
+#Untagged: mongo@sha256:7df93c5e2d140beabc39ef225da618df28cc916a5f5f295a41858accc0f46a0b
+docker images
+#notice below the TAG column
+#$ docker images
+#REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+#<none>              <none>              9c02a5a12c52        2 days ago          413MB
+#hello-world         latest              fce289e99eb9        6 months ago        1.84kB
